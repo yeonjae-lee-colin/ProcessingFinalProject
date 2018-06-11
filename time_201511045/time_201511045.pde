@@ -9,10 +9,11 @@ int index = 0 ;
 PFont font; 
 String fontArray [] = {"font-100.vlw","Thin-100.vlw"};
 
-void setup(){	size(900,600);
+void setup(){	
+	size(900,600);
 	smooth();
 	noStroke();
-	// background(255); // 처음 처럼 흔적남는 배경  
+	background(33, 38, 43,100); // 처음 처럼 흔적남는 배경  
 	//객체 생성
 	particles = new ArrayList();
 	timelines = new ArrayList();
@@ -20,8 +21,10 @@ void setup(){	size(900,600);
 }
 
 void draw(){
-	background(0,100); // ver . star dust 
+	// background(33, 38, 43,100); // ver . star dust 
 	//particle 백그라운드   
+	fill(0);
+	rect(0, 0, width, height);
 	particles.add(new Particle(new PVector(random(width),random(height))));
 	for(int i = particles.size()-1; i >= 0; i--){
 		Particle p = particles.get(i);
@@ -33,7 +36,7 @@ void draw(){
     
 	//배경 
 	if(BW == -1){
-		fill(21, 16, 20,12);
+		fill(33, 38, 43,100);
 	}
 	noStroke();
 	rect(0, 0, width, height);
@@ -88,7 +91,9 @@ class TimeLine {
 	float easing =0.002;
 	float blur = 0.0;
 	int direction = 1;
-	color rgb = color(65, 72, 185);
+	color colors[] = 
+	 {color(65, 72, 185),
+	 	color(96, 177, 173)};
 	int radius = 20;
 	String timeStamp = null;
 	long timeMillis  = 0;
@@ -119,7 +124,7 @@ class TimeLine {
 		this.direction = direction;
 	}
 	void invertColor(){
-		rgb = color(43, 249, 200,12); 
+		// rgb = color(43, 249, 200,12); 
 	}
 
 	void update(){
@@ -140,7 +145,7 @@ class TimeLine {
 		// TimeLine(x1,y1,x1+100,y1);
 		 
 		noStroke();
-		fill(43, 249, 200,50);
+		fill(colors[1],50);
 		ellipse(x1,y1,radius+5,radius+5);
 		//draw timeline
 		fill(255, 255, 255,100);
@@ -169,7 +174,7 @@ class TimeLine {
 				strokeWeight(1.2);
 				line(0,y1,width,y1);
 				//stroke 
-				stroke(43, 255, 200,150);
+				stroke(colors[1],150);
 				strokeWeight(0.5);
 				line(0,y1,width,y1);
 		}
@@ -205,7 +210,10 @@ class Particle {
    color[] colors = {
 	   color(92, 40, 217),
 	   color(5, 38, 225),
-	   color(255,255,255)
+	   color(255,255,255),
+	   color(131, 133, 135), //light gray
+	   color(60, 61, 62)  // gray
+
    };
 
   Particle(PVector l) {
@@ -233,7 +241,7 @@ class Particle {
   // Method to display
   void display() {
   	noStroke();
-    fill(colors[(int)random(0,2)], lifespan);
+    fill(colors[3], lifespan);
     rect(position.x, posY, 1, 1);
   }
 
