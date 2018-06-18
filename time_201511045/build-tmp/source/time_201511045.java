@@ -20,14 +20,14 @@ ArrayList<Particle> particles;
 ArrayList<TimeLine> timelines; 
 int index = 0 ;
 PFont font; 
-String fontArray [] = {"Orbitron-100.vlw","font-100.vlw"};
+String fontArray [] = {"Orbitron-100.vlw"};
 
 public void setup(){  
   // size(900,600);  // mac display resolution : 1440 * 900
   
   
   noStroke();
-  background(33, 38, 43); // 처음 처럼 흔적남는 배경  
+  background(33, 38, 43); 
   //객체 생성
   particles = new ArrayList();
   timelines = new ArrayList();
@@ -105,7 +105,7 @@ class TimeLine {
  TimeLine(float x1, float y1){
  	this.x1 =x1; this.y1 =y1;
  	timeMillis = millis();
- 	modular = width/30+2;  // default = 32 !!!!!!!!!!!!!!
+ 	modular = width/30+2;  // default = 32 
  	radius = (int)timeMillis%(int)modular;
  	speed = (float)map(second(),0,60,0.8f,2.4f);
  	ori_speed = speed;
@@ -158,11 +158,11 @@ public void checkEvent(){
       	 speed = 0 ; 
       }
      
-      println(speed);
+     // println(speed);
       if(speed<0.5f){
       	showTimeStamp();
       }
-      //y축 마우스 이동 -> timeline의 흔적 보여주기 
+      //y축 마우스 이동 -> timeline 흔적 보여주기 
       if((pmouseY-mouseY>0 || pmouseY-mouseY<0)){
        	showTimeLine();
     }
