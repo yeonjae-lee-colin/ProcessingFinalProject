@@ -23,8 +23,8 @@ PFont font;
 String fontArray [] = {"Orbitron-100.vlw"};
 
 public void setup(){  
-  // size(900,600);  // mac display resolution : 1440 * 900
-  
+    // mac display resolution : 1440 * 900
+  // size(displayWidth, displayHeight);
   
   noStroke();
   background(33, 38, 43); 
@@ -153,7 +153,7 @@ public void checkEvent(){
         showTimeLine();
     }
       //속력 감소 (linear interpolation)
-      speed = lerp(speed, 0.0f, 0.02f);
+      speed = lerp(speed, 0.0f, 0.01f);
       if(speed <=0.0f){
       	 speed = 0 ; 
       }
@@ -269,7 +269,7 @@ public void enableBlur(){
   	}
   }
 }
-  public void settings() {  size(displayWidth, displayHeight);  smooth(); }
+  public void settings() {  size(900,600);  smooth(); }
   static public void main(String[] passedArgs) {
     String[] appletArgs = new String[] { "time_201511045" };
     if (passedArgs != null) {

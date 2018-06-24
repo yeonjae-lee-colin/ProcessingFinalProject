@@ -1,5 +1,10 @@
-TimeLine timeline  ;
-Particle particle ;
+/** 
+*TIME IS ILLUSION
+* created by yeonjae lee
+* yjflore34@gmail.com
+*/
+TimeLine timeline;
+Particle particle;
 ArrayList<Particle> particles;
 ArrayList<TimeLine> timelines; 
 int index = 0 ;
@@ -12,17 +17,16 @@ void setup(){
   smooth();
   noStroke();
   background(33, 38, 43); 
-  //객체 생성
   particles = new ArrayList();
   timelines = new ArrayList();
 }
 
 void draw(){
-  //particle 백그라운드  
+  //background particles
   noStroke(); 
   fill(10,12);
   rect(0, 0, width, height);
-  //particle 생성 및 그리기 
+  //create & draw particles
   particles.add(new Particle(new PVector(random(width),random(height))));
   for(int i = particles.size()-1; i >= 0; i--){
   	Particle p = particles.get(i);
@@ -32,12 +36,12 @@ void draw(){
   	}
   }  
 
-  //배경 
+  //background
   fill(33, 38, 43,2);
   noStroke();
   rect(0, 0, width, height);
 
-  //타임라인 그리기
+  //draw timelines
   for(TimeLine l : timelines){
   	l.update();
   }
@@ -46,7 +50,7 @@ void draw(){
 }
 
 void mouseClicked(){
-  //타임라인 생성후 리스트에 저장 
+  //create TimeLine
   TimeLine l = new TimeLine(mouseX, mouseY);
   timelines.add(l);
 }
@@ -55,7 +59,7 @@ void keyPressed(){
 	reset();
 }
 
-//모든 타임라인을 삭제
+
 void reset(){
 	if(key == 'r')
 		timelines.clear();
@@ -67,7 +71,7 @@ void reset(){
 class TimeLine {
 	float x1, x2, y1, y2;
 	int radius;
-	float modular; // 원 사이즈 = 타임라인 생성시각(ms) % modular
+	float modular; // diameter of timeline = timestamp(ms) % modular
 	float speed ; 
 	float ori_speed;
 	float easing =0.002;
@@ -76,15 +80,15 @@ class TimeLine {
 	color tempcolor ;
 	String timeStamp = null;
 	long timeMillis  = 0;
-	float glow ;  // 투명도 컨트롤 
+	float glow ;  // control the opacity
 	PFont font;
-	//멈췄을 때 blur 효과
+	//blur effect to stopped timelines
 	float frequency = 0.0;   
 	float alpha = 170;      
 
 /**
  * Constructor
- * @Param : x1, y2 - 마우스 클릭 좌표 
+ * @Param : x1, y2 - mouseX, mouseY
  */
  TimeLine(float x1, float y1){
  	this.x1 =x1; this.y1 =y1;
@@ -94,9 +98,9 @@ class TimeLine {
  	speed = (float)map(second(),0,60,0.8,2.4);
  	ori_speed = speed;
  	tempcolor = color(map(second(),0,60,0,255),timeMillis%255,random(0,255));
-    //생성시점의 timestamp를 String으로 저장 
+    //Convert timeStamp into String
     timeStamp = Integer.toString(month()) + "/"
-        +Integer.toString(day()) +"-"  // "-"가 splitter 
+        +Integer.toString(day()) +"-"  // "-" is a splitter 
         +Integer.toString(hour()) + ":"
         +Integer.toString(minute()) + ":" 
         +Integer.toString(second());
@@ -132,7 +136,7 @@ void update(){
 void checkEvent(){
 	if(mousePressed == true){
 		if((pmouseX - mouseX >0)||(pmouseX - mouseX <0)){
-        //방향 전환 
+        //change direction
         direction=-1*direction;
         showTimeLine();
     }
@@ -146,12 +150,11 @@ void checkEvent(){
       if(speed<0.5){
       	showTimeStamp();
       }
-      //y축 마우스 이동 -> timeline 흔적 보여주기 
       if((pmouseY-mouseY>0 || pmouseY-mouseY<0)){
        	showTimeLine();
     }
 }else if(mousePressed == false){
-	//원래 속도로 복원 
+	//reset to its initial speed
 	speed= ori_speed;
 }
 }
@@ -172,19 +175,18 @@ void showTimeStamp(){
 
 	String day;
 	String time;
-    //폰트 설정 
     font = loadFont(fontArray[0]);
-    //폰트 사이즈 
+    //set font size 
     if(radius/1.6 == 0){    
     	textFont(font, 0.5);
     }else{
     	textFont(font, radius/2.8);
     }
-    String s [] = split(timeStamp, "-");  // day, time 분리 
+    String s [] = split(timeStamp, "-");  // split day, time 
     day = s[0];
     time = s[1];
 
-    fill(lerp(0, 230, 1.4),180);  //감소하는 속도에 따라 서서히 보이도록 설정 
+    fill(lerp(0, 230, 1.4),180);  // easing movement
     text(day, x1+radius/1.5+2, y1-2);
     text(time, x1+radius/1.5+2, y1+radius/2-2);
 }
@@ -202,13 +204,13 @@ void enableBlur(){
 
 
 /**
- * 배경에 쓰일 Particle 
+ * Particle 
  */
  class Particle {
  	PVector position;
  	PVector velocity;
  	PVector acceleration;
-  	float lifespan; // 투명도를 이용 
+  	float lifespan; // opacity 
   	float posY;
   	float size = 1.2;
   	color[] colors = {
@@ -230,21 +232,19 @@ void enableBlur(){
  	display();
  }
 
-  // 위치 업데이트
   void update() {
   	velocity.add(acceleration);
   	position.add(velocity);
   	lifespan -= 0.3;
   }
 
-  // 화면에 그리기 
   void display() {
   	noStroke();
   	fill(colors[(int)random(0,2)], lifespan);
   	rect(position.x, posY, size,size);
   }
 
-  // 파티클 lifespan 체크 
+  // check lifespan
   boolean isDead() {
   	if (lifespan < 0.0) {
   		return true;
