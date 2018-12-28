@@ -6,11 +6,11 @@
 
 ### Title
 Time is illusion
-### Interaction
-It works with a user's mouse interaction.
-- click a mouse for timeline creation.
-- hold and drag a mouse in a vertical direction will reverse timelines.
-- press 'r' key to delete them all.
+### How does it work?
+It works with a mouse interaction.
+- click a mouse to create a new timeline.
+- hold and drag a mouse in a vertical direction to reverse timelines.
+- press 'r' key to reset.
 
 # Concept
 
